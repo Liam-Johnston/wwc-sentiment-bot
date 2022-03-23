@@ -1,0 +1,6 @@
+.terraform.lock.hcl
+.credentials
+.terraform
+.DS_Store
+tfplan
+dist

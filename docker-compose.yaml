@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  event-handler-base:
+    build:
+      context: ./event-handler
+    init: true
+    volumes:
+      - './event-handler/src:/app/src'
+    environment:
+      - NODE_ENV=development
+      - SLACK_SIGNING_SECRET=1234
+      - PUBSUB_EMULATOR_HOST=http://pubsub:8432
+      - GCP_PROJECT_ID=project-test
+
+  event-handler:
+    extends:
+      service: event-handler-base
+    ports:
+      - 8080:8080
+    depends_on:
+      - pubsub
+
+  event-handler-debugger:
+    extends:
+      service: event-handler-base
+    ports:
+      - 8080:8080
+      - 9229:9229
+    command:
+      - bin/debug
+    depends_on:
+      - pubsub
+
+  pubsub:
+    image: singularities/pubsub-emulator
+    environment:
+      - PUBSUB_PROJECT_ID=project-test
+      - PUBSUB_LISTEN_ADDRESS=0.0.0.0:8432
+    ports:
+      - "8432:8432"
+
+  gcloud:
+    image: google/cloud-sdk:alpine
+    volumes:
+      - './.credentials:/out'
+
+  tf:
+    image: hashicorp/terraform:1.1.6
+    volumes:
+      - './deploy:/opt/app'
+      - './dist:/dist'
+      - './.credentials:/root/.config/gcloud'
+    environment:
+      - TF_VAR_region=us-west1
+      - TF_VAR_project_id=${PROJECT_ID}
+    working_dir: /opt/app
+
+  builder:
+    build:
+      context: ./builder
+    working_dir: /dist
+    volumes:
+      - './event-handler:/app'
+      - './dist:/dist'

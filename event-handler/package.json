@@ -1,0 +1,20 @@
+{
+  "name": "contino-slack-bot",
+  "version": "1.0.0",
+  "description": "function used to intergrate slack with contino cloud",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "functions-framework --target=entryPoint",
+    "debug": "node --inspect=0.0.0.0 node_modules/.bin/functions-framework --target=entryPoint"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tsscmp": "^1.0.6",
+    "@google-cloud/pubsub": "^2.19.0"
+
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^3.0.0"
+  }
+}
