@@ -1,0 +1,14 @@
+{
+  "name": "sentinment",
+  "version": "1.0.0",
+  "description": "function used to intergrate slack with gcp",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/web-api": "^6.4.0"
+  }
+}

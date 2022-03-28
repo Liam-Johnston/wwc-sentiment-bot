@@ -4,27 +4,23 @@ const logger = require('../utils/logger')
 const isPrimitive = (ref) => ref !== Object(ref)
 
 
-const getMessageAttributes = (event, slackEventId) => {
+const getEventAttributes = (event, slackEventId) => {
   const attributes = {
     slackEventId
   }
   for (const [key, value] of Object.entries(event)) {
-    if (isPrimitive(value)) attributes[key] = value
+    if (isPrimitive(value)) attributes[key] = value.toString()
   }
+  return attributes
 }
 
 
 exports.publish = async (event, eventId) => {
-  const topic = event.type
+  logger.info('Received event from slack, publishing to event stream')
 
-  logger.info('received message from slack to put message on a topic', {
-    topic
-  })
+  const attributes = getEventAttributes(event, eventId)
 
-  const attributes = getMessageAttributes(event, eventId)
-
-  const result = await pubSub.publishMessage(
-    topic,
+  const result = await pubSub.publishEvent(
     JSON.stringify(event),
     attributes
   )

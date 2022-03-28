@@ -7,13 +7,9 @@ terraform {
       version = "4.11.0"
     }
   }
-
-  backend "gcs" {
-    prefix = "terraform/state"
-  }
 }
 
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  project = var.gcp_project_id
+  region  = var.gcp_region
 }

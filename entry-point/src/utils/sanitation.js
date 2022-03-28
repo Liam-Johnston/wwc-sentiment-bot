@@ -26,3 +26,9 @@ exports.getSafeSignature = (headers) => {
 
   throw new errors.InvalidRequestParameters('Invalid signature format')
 }
+
+exports.getSafeRawBody = (rawBody) => {
+  if (rawBody !== undefined) return rawBody.toString()
+  return ''
+}
+

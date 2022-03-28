@@ -1,6 +1,9 @@
-.terraform.lock.hcl
 .credentials
 .terraform
 .DS_Store
 tfplan
 dist
+.env
+node_modules
+deploy/terraform.tfstate
+deploy/terraform.tfstate.backup

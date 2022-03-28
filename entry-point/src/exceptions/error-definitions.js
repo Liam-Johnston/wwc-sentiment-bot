@@ -3,7 +3,7 @@ exports.VerificationError = class extends Error {
     super(message)
     this.name = 'Unauthorized'
     this.message = message
-    this.status = 401
+    this.statusCode = 401
   }
 }
 
@@ -12,6 +12,6 @@ exports.InvalidRequestParameters = class extends Error {
     super(message)
     this.name = 'InvalidRequestParameters'
     this.message = message
-    this.status = 400
+    this.statusCode = 400
   }
 }

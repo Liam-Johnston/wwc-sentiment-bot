@@ -2,6 +2,7 @@ const validation = require('./utils/validation')
 const logger = require('./utils/logger')
 const eventHandler = require('./repositories/eventHandler')
 const sanitation = require('./utils/sanitation')
+const errors = require('./exceptions/error-definitions')
 
 
 const resolveURLVerification = ({challenge}) => {
@@ -13,7 +14,7 @@ const resolveURLVerification = ({challenge}) => {
 }
 
 const resolveEventCallBack = async (body) => {
-  return await eventHandler.publish(body.event, body.event_id)
+  return await eventHandler.publish(body.event, body.event_id.toString())
 }
 
 const attachDefaultLoggingAttributes = (body) => {
@@ -36,37 +37,34 @@ const main = async (req, res) => {
   const isValidSlackRequest = validation.isValidSlackRequest(
     sanitation.getSafeTimestamp(headers),
     sanitation.getSafeSignature(headers),
-    rawBody.toString()
+    sanitation.getSafeRawBody(rawBody)
   )
 
   if (!isValidSlackRequest) {
-    res
-      .status(403)
-      .send('Invalid Request')
-    return
+    throw new errors.VerificationError('Invalid Request')
   }
-
-  let response = {}
-  let status = 404
 
   if (body.type === "url_verification") {
-    response = resolveURLVerification(body)
-    status = 200
+    return {
+      response: resolveURLVerification(body),
+      status: 200
+    }
   }
 
-  if (body.type === "event_callback") {
-    response = await resolveEventCallBack(body)
-    status = 202
+  return {
+    response: await resolveEventCallBack(body),
+    status: 202
   }
-
-  res
-    .status(status)
-    .send(response);
 }
 
 exports.entryPoint = async (req, res) => {
-  await main(req, res).
-    catch(e => {
+  await main(req, res)
+    .then( ({response, status}) => {
+      res
+        .status(status)
+        .send(response)
+    })
+    .catch(e => {
       logger.error(
         'Internal Server Error',
         {
@@ -75,7 +73,7 @@ exports.entryPoint = async (req, res) => {
         }
       )
       res
-        .status(500)
-        .send('Internal Server Error')
+        .status(e.status || 500)
+        .send(e.name || 'Internal Server Error')
     })
 }
