@@ -19,8 +19,9 @@ run_apply: init apply
 .PHONY: init
 init:
 	$(TERRAFORM) init -input=false
-	-$(TERRAFORM) validate
-	-$(TERRAFORM) fmt
+	$(TERRAFORM) validate
+	$(TERRAFORM) fmt
+	-@docker-compose run --entrypoint sh tf /scripts/import_app_engine.sh > /dev/null
 
 .PHONY: plan
 plan:
@@ -53,3 +54,6 @@ build_all: build_entry_point build_sentiment_bot
 
 .PHONY: deploy
 deploy: build_all init plan apply
+
+.PHONY: infra_deploy
+infra_deploy: init plan apply

@@ -5,11 +5,13 @@ const logger = require('./utils/logger')
 const main = async (req) => {
   const body = JSON.parse(Buffer.from(req.body.message.data, 'base64').toString('utf-8'))
 
+  logger.setLoggingAttribute('slackEventId', body.eventID)
+
   logger.info("Request Received", {
     body
   })
 
-  const response = bot.analyseMessage(body)
+  const response = await bot.analyseMessage(body)
   const status = 200
 
   return {

@@ -1,0 +1,31 @@
+{
+  "blocks": [
+    {
+      "type": "rich_text",
+      "elements": [
+        {
+          "elements": [
+            {
+              "text": "message text",
+              "type": "text"
+            }
+          ],
+          "type": "rich_text_section"
+        }
+      ],
+      "block_id": "TTpO="
+    }
+  ],
+  "text": "message text",
+  "user": "U038RBN7421",
+  "slackEventId": "Ev039ABZHEQ2",
+  "type": "message",
+  "team": "T038MJG5NMC",
+  "ts": "1648637495.153139",
+  "channel": "C039J1B8BME",
+  "eventID": "Ev039ABZHEQ2",
+  "event_ts": "1648637495.153139",
+  "client_msg_id": "392ffc92-281f-4b77-816a-f5f2c2e52d97",
+  "timestamp": "2022-03-30T10:51:42.424Z",
+  "channel_type": "channel"
+}
