@@ -11,6 +11,7 @@ services:
     volumes:
       - './deploy:/opt/app'
       - './dist:/dist'
+      - './scripts:/scripts'
       - './.credentials:/root/.config/gcloud'
     working_dir: /opt/app
     env_file: .env

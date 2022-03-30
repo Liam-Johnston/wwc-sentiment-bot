@@ -7,3 +7,4 @@ dist
 node_modules
 deploy/terraform.tfstate
 deploy/terraform.tfstate.backup
+deploy/.terraform.tfstate.lock.info

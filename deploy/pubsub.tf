@@ -16,14 +16,3 @@ resource "google_pubsub_subscription" "event_sub" {
     }
   }
 }
-
-resource "google_service_account" "invoker_service_account" {
-  account_id   = "sentiment-bot-invoker"
-  display_name = "Sentiment Bot pub sub invoker"
-}
-
-resource "google_project_iam_member" "custom_role" {
-  project = var.gcp_project_id
-  role    = "roles/cloudfunctions.invoker"
-  member  = "serviceAccount:${google_service_account.invoker_service_account.email}"
-}
