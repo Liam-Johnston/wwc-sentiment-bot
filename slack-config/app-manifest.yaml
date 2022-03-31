@@ -1,0 +1,20 @@
+display_information:
+  name: Sentiment-Bot
+features:
+  bot_user:
+    display_name: Sentiment-Bot
+    always_online: false
+oauth_config:
+  scopes:
+    bot:
+      - chat:write
+      - mpim:history
+      - channels:history
+settings:
+  event_subscriptions:
+    request_url: <entry_point_invoke_url>
+    bot_events:
+      - message.channels
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false

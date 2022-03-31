@@ -4,10 +4,12 @@ const slack = require('../repositories/slack')
 const language = require('../repositories/language')
 const eventLease = require('../repositories/eventLease')
 
-exports.analyseMessage = async ({text}) => {
+exports.analyseMessage = async ({text, channel, ts}) => {
   logger.info("New message in channel", {
     text
   })
+
+  await slack.replyToMessage('Message Reply', channel, ts)
 
   return "Success"
 }
