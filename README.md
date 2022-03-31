@@ -1,4 +1,4 @@
-# Sentiment ANalysis Bot
+# Sentiment Analysis Bot
 
 ## See the bot in action
 
@@ -121,3 +121,7 @@ make deploy
 ## Tech problems
 
 I will be most responsive in the slack workspace, join the slack workspace [here](https://join.slack.com/t/sentiment-bot/shared_invite/zt-16bjybl1f-369uKOLoEMtapDQa5T3j~Q) and ask a question in [this channel](https://sentiment-bot.slack.com/archives/C039FNNF0QK)
+
+## Alerting on high execution count
+
+If you would like to get email notifications when your function experiences a high volume of requests you can define a new variable in the [.env](.env) file called `TF_VAR_alert_email` and set its value to an email address you want to recieve alerts on. For example `TF_VAR_alert_email=steve.jobs@apple.com`.

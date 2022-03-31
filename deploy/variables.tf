@@ -17,3 +17,9 @@ variable "slack_oauth_token" {
   type        = string
   description = "The slack bot user OAuth token used to make api calls to slack"
 }
+
+variable "alert_email" {
+  type        = string
+  description = "Email address to send alerts to"
+  default     = ""
+}
