@@ -9,7 +9,7 @@ exports.analyseMessage = async ({text, channel, ts}) => {
     text
   })
 
-  await slack.replyToMessage('Message Reply', channel, ts)
+  await slack.replyToMessage('Hello!', channel, ts)
 
   return "Success"
 }
